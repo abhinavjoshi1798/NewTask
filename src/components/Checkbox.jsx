@@ -1,16 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export const CustomCheckbox = () => {
-  const [checked, setChecked] = useState(false);
+export const CustomCheckbox = ({ checked, onChange }) => {
   const [hover, setHover] = useState(false);
   const [strokeColor, setStrokeColor] = useState("transparent");
+
+  useEffect(() => {
+    if (!checked) {
+      setHover(false);
+      setStrokeColor("transparent");
+    }
+  }, [checked]);
 
   return (
     <div
       className={`checkbox ${checked ? "checked" : ""} ${
         checked && !hover ? "checked-leave" : ""
       }`}
-      onClick={() => setChecked(!checked)}
+      onClick={onChange}
       onMouseEnter={() => {
         setHover(true);
         setStrokeColor("#eeeeee");
